@@ -1,0 +1,41 @@
+<html>
+	<head>
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      	<!--Import materialize.css-->
+      	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+          
+	</head>
+	<body>
+		<div id="outputDiv"></div>
+	
+	
+		<script src="https://cdn.rawgit.com/Gmousse/dataframe-js/master/lib/browser/dataframe.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			var DataFrame = dfjs.DataFrame;
+			DataFrame.fromCSV('http://vincentarelbundock.github.io/Rdatasets/csv/COUNT/titanic.csv').then(
+				df => { 
+					var arr = df.toArray();
+					console.log('data', df.toArray());
+					var heading = df.listColumns();
+
+					var HTML = "<table class=striped border=1 width=100%><tr>";
+					for(k=0; k<heading.length; k++){
+						HTML += "<td>" + heading[k] + "</td>"
+					}
+					HTML += "</tr>"
+					for(i=0;i<arr.length;i++)
+					{
+						HTML +=  "<tr>"
+						for(j=0; j<arr[i].length; j++){
+							HTML += "<td align=center>"+arr[i][j]+"</td>";
+						}
+						HTML +=  "</tr>"
+					}
+					HTML += "</table>";
+					document.getElementById("outputDiv").innerHTML = HTML;
+				}
+			);
+		</script>
+	</body>
+</html>
