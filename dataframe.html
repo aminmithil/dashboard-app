@@ -3,17 +3,21 @@
 		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       	<!--Import materialize.css-->
       	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-          
+        <link rel="stylesheet" type="text/css" href="css/main.css"/>
 	</head>
 	<body>
 	<input type="button" value="JsonToDfToTable" onclick="jsontoDFfunc()" />
 	<input type="button" value="CSVtoDFfunc" onclick="CSVtoDFfunc()" />
-		<div id="outputDiv"></div>
+	<div align="center">	
+		<div id="outputDiv" class="ShowTable"></div>
+	</div>
+
+	<div id="checkBox" align="center" class="ShowCheckBox">
+	</div>
 	
-	
-		<script src="https://cdn.rawgit.com/Gmousse/dataframe-js/master/lib/browser/dataframe.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		<script type="text/javascript">
+	<script src="https://cdn.rawgit.com/Gmousse/dataframe-js/master/dist/dataframe.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript">
 		
 		function jsontoDFfunc() {
 		console.log("jsontoDF")
@@ -22,7 +26,7 @@
 				df => { 
 					var arr = df.toArray();					
 					var heading = df.listColumns();
-
+					console.log('Column', df.listColumns());
 					var HTML = "<table class=striped border=1 width=100%><tr>";
 					for(k=0; k<heading.length; k++){
 						HTML += "<td>" + heading[k] + "</td>"
@@ -40,7 +44,7 @@
 					document.getElementById("outputDiv").innerHTML = HTML;
 				}
 			);
-}
+		}
 
 function CSVtoDFfunc() {
 			var DataFrame = dfjs.DataFrame;
@@ -49,6 +53,7 @@ function CSVtoDFfunc() {
 				df => { 
 					var arr = df.toArray();
 					var heading = df.listColumns();
+					console.log('Column', df.listColumns());
 					var HTML = "<table class=striped border=1 width=100%><tr>";
 					for(k=0; k<heading.length; k++){
 						HTML += "<td>" + heading[k] + "</td>"
@@ -64,6 +69,12 @@ function CSVtoDFfunc() {
 					}
 					HTML += "</table>";
 					document.getElementById("outputDiv").innerHTML = HTML;
+
+					var checkBox = "";
+					for(i=1; i<heading.length; i++){
+						checkBox += "<input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label>";
+					}
+					document.getElementById("checkBox").innerHTML = checkBox;
 				}
 			);
 			}
