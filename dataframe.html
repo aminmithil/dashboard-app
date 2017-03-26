@@ -4,10 +4,23 @@
       	<!--Import materialize.css-->
       	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
         <link rel="stylesheet" type="text/css" href="css/main.css"/>
+
 	</head>
 	<body>
-	<input type="button" value="JsonToDfToTable" onclick="jsontoDFfunc()" />
-	<input type="button" value="CSVtoDFfunc" onclick="CSVtoDFfunc()" />
+	<h1>Open Space - Parks</h1>
+	
+	<div id="mySidenav" class="sidenav">
+
+	  <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
+	  <a href="#" onclick="CSVtoDFfunc_d1()" id="d1">DataSet 1</a>
+	  <a href="#" onclick="CSVtoDFfunc_d2()" id="d2">DataSet 2</a>
+	  <a href="#" onclick="CSVtoDFfunc_d3()" id="d3">DataSet 3</a>
+	  <a href="#" onclick="CSVtoDFfunc_d4()" id="d4">DataSet 4</a>
+	  <a href="#" onclick="CSVtoDFfunc_d5()" id="d5">DataSet 5</a>
+	  
+	</div>
+	
+	
 	<div align="center">	
 		<div id="outputDiv" class="ShowTable"></div>
 	</div>
@@ -46,10 +59,10 @@
 			);
 		}
 
-function CSVtoDFfunc() {
+function CSVtoDFfunc_d1() {
 			var DataFrame = dfjs.DataFrame;
 			console.log("CSVtoDF")
-			DataFrame.fromCSV('http://vincentarelbundock.github.io/Rdatasets/csv/COUNT/titanic.csv').then(
+			DataFrame.fromCSV('Datasets/Parks_-_Locations_Chicago.csv').then(
 				df => { 
 					var arr = df.toArray();
 					var heading = df.listColumns();
@@ -78,6 +91,148 @@ function CSVtoDFfunc() {
 				}
 			);
 			}
+
+
+	function CSVtoDFfunc_d2() {
+			var DataFrame = dfjs.DataFrame;
+			console.log("CSVtoDF")
+			DataFrame.fromCSV('Datasets/Department_of_Recreation_and_Parks__Facility_and_Park_Information_LA.csv').then(
+				df => { 
+					var arr = df.toArray();
+					var heading = df.listColumns();
+					console.log('Column', df.listColumns());
+					var HTML = "<table class=striped border=1 width=100%><tr>";
+					for(k=0; k<heading.length; k++){
+						HTML += "<td>" + heading[k] + "</td>"
+					}
+					HTML += "</tr>"
+					for(i=0;i<arr.length;i++)
+					{
+						HTML +=  "<tr>"
+						for(j=0; j<arr[i].length; j++){
+							HTML += "<td align=center>"+arr[i][j]+"</td>";
+						}
+						HTML +=  "</tr>"
+					}
+					HTML += "</table>";
+					document.getElementById("outputDiv").innerHTML = HTML;
+
+					var checkBox = "";
+					for(i=1; i<heading.length; i++){
+						checkBox += "<input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label>";
+					}
+					document.getElementById("checkBox").innerHTML = checkBox;
+				}
+			);
+			}
+
+			function CSVtoDFfunc_d3() {
+			var DataFrame = dfjs.DataFrame;
+			console.log("CSVtoDF")
+			DataFrame.fromCSV('Datasets/BOUNDARIES_city_of_austin_park.csv').then(
+				df => { 
+					var arr = df.toArray();
+					var heading = df.listColumns();
+					console.log('Column', df.listColumns());
+					var HTML = "<table class=striped border=1 width=100%><tr>";
+					for(k=0; k<heading.length; k++){
+						HTML += "<td>" + heading[k] + "</td>"
+					}
+					HTML += "</tr>"
+					for(i=0;i<arr.length;i++)
+					{
+						HTML +=  "<tr>"
+						for(j=0; j<arr[i].length; j++){
+							HTML += "<td align=center>"+arr[i][j]+"</td>";
+						}
+						HTML +=  "</tr>"
+					}
+					HTML += "</table>";
+					document.getElementById("outputDiv").innerHTML = HTML;
+
+					var checkBox = "";
+					for(i=1; i<heading.length; i++){
+						checkBox += "<input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label>";
+					}
+					document.getElementById("checkBox").innerHTML = checkBox;
+				}
+			);
+			}
+			function CSVtoDFfunc_d4() {
+			var DataFrame = dfjs.DataFrame;
+			console.log("CSVtoDF")
+			DataFrame.fromCSV('Datasets/Mecklenburg_County_Park_Locations.csv').then(
+				df => { 
+					var arr = df.toArray();
+					var heading = df.listColumns();
+					console.log('Column', df.listColumns());
+					var HTML = "<table class=striped border=1 width=100%><tr>";
+					for(k=0; k<heading.length; k++){
+						HTML += "<td>" + heading[k] + "</td>"
+					}
+					HTML += "</tr>"
+					for(i=0;i<arr.length;i++)
+					{
+						HTML +=  "<tr>"
+						for(j=0; j<arr[i].length; j++){
+							HTML += "<td align=center>"+arr[i][j]+"</td>";
+						}
+						HTML +=  "</tr>"
+					}
+					HTML += "</table>";
+					document.getElementById("outputDiv").innerHTML = HTML;
+
+					var checkBox = "";
+					for(i=1; i<heading.length; i++){
+						checkBox += "<input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label>";
+					}
+					document.getElementById("checkBox").innerHTML = checkBox;
+				}
+			);
+			}
+			function CSVtoDFfunc_d5() {
+			var DataFrame = dfjs.DataFrame;
+			console.log("CSVtoDF")
+			DataFrame.fromCSV('Datasets/Open_Space_Boston.csv').then(
+				df => { 
+					var arr = df.toArray();
+					var heading = df.listColumns();
+					console.log('Column', df.listColumns());
+					var HTML = "<table class=striped border=1 width=100%><tr>";
+					for(k=0; k<heading.length; k++){
+						HTML += "<td>" + heading[k] + "</td>"
+					}
+					HTML += "</tr>"
+					for(i=0;i<arr.length;i++)
+					{
+						HTML +=  "<tr>"
+						for(j=0; j<arr[i].length; j++){
+							HTML += "<td align=center>"+arr[i][j]+"</td>";
+						}
+						HTML +=  "</tr>"
+					}
+					HTML += "</table>";
+					document.getElementById("outputDiv").innerHTML = HTML;
+
+					var checkBox = "";
+					for(i=1; i<heading.length; i++){
+						checkBox += "<input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label>";
+					}
+					document.getElementById("checkBox").innerHTML = checkBox;
+				}
+			);
+			}	
+
+
+		/* Set the width of the side navigation to 250px */
+		function openNav() {
+		    document.getElementById("mySidenav").style.width = "250px";
+		}
+
+		/* Set the width of the side navigation to 0 */
+		function closeNav() {
+		    document.getElementById("mySidenav").style.width = "0";
+		}
 		</script>
 	</body>
 </html>

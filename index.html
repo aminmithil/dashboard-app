@@ -3,14 +3,15 @@
 
 	</head>
 	<body>
-		<canvas id="lineChart" width="50" height="50"></canvas>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+		<div style="width: 500px; height: 500px;">
+			<canvas id="lineChart"></canvas>
+		</div>
 		<script src="js/Chart.min.js"></script>
 		<script>
 			var data = {
 			    labels: ["January", "February", "March", "April", "May", "June", "July"],
 			    datasets: [
-			        {
+			        {	
 			            label: "My First dataset",
 			            fill: false,
 			            lineTension: 0.1,
