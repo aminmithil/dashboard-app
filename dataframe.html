@@ -1,23 +1,23 @@
 <html>
-	<head>
-		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      	<!--Import materialize.css-->
-      	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-        <link rel="stylesheet" type="text/css" href="css/main.css"/>
+<head>
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+	<link rel="stylesheet" type="text/css" href="css/main.css"/>
 
-	</head>
-	<body>
+</head>
+<body>
 	<h1>Open Space - Parks</h1>
 	
 	<div id="mySidenav" class="sidenav">
 
-	  <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
-	  <a href="#" onclick="CSVtoDFfunc_d1()" id="d1">DataSet 1</a>
-	  <a href="#" onclick="CSVtoDFfunc_d2()" id="d2">DataSet 2</a>
-	  <a href="#" onclick="CSVtoDFfunc_d3()" id="d3">DataSet 3</a>
-	  <a href="#" onclick="CSVtoDFfunc_d4()" id="d4">DataSet 4</a>
-	  <a href="#" onclick="CSVtoDFfunc_d5()" id="d5">DataSet 5</a>
-	  
+		<!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
+		<a href="#" onclick="CSVtoDFfunc_d1()" id="d1">DataSet 1</a>
+		<a href="#" onclick="CSVtoDFfunc_d2()" id="d2">DataSet 2</a>
+		<a href="#" onclick="CSVtoDFfunc_d3()" id="d3">DataSet 3</a>
+		<a href="#" onclick="CSVtoDFfunc_d4()" id="d4">DataSet 4</a>
+		<a href="#" onclick="CSVtoDFfunc_d5()" id="d5">DataSet 5</a>
+		
 	</div>
 	
 	
@@ -33,7 +33,7 @@
 	<script type="text/javascript">
 		
 		function jsontoDFfunc() {
-		console.log("jsontoDF")
+			console.log("jsontoDF")
 			var DataFrame = dfjs.DataFrame;			
 			DataFrame.fromJSON("file:///"+window.location.pathname.replace(/^\/|\/$/g, '').slice(0,-14)+"dataframe.json").then(
 				df => { 
@@ -56,10 +56,10 @@
 					HTML += "</table>";
 					document.getElementById("outputDiv").innerHTML = HTML;
 				}
-			);
+				);
 		}
 
-function CSVtoDFfunc_d1() {
+		function CSVtoDFfunc_d1() {
 			var DataFrame = dfjs.DataFrame;
 			console.log("CSVtoDF")
 			DataFrame.fromCSV('Datasets/Parks_-_Locations_Chicago.csv').then(
@@ -89,11 +89,11 @@ function CSVtoDFfunc_d1() {
 					}
 					document.getElementById("checkBox").innerHTML = checkBox;
 				}
-			);
-			}
+				);
+		}
 
 
-	function CSVtoDFfunc_d2() {
+		function CSVtoDFfunc_d2() {
 			var DataFrame = dfjs.DataFrame;
 			console.log("CSVtoDF")
 			DataFrame.fromCSV('Datasets/Department_of_Recreation_and_Parks__Facility_and_Park_Information_LA.csv').then(
@@ -123,10 +123,10 @@ function CSVtoDFfunc_d1() {
 					}
 					document.getElementById("checkBox").innerHTML = checkBox;
 				}
-			);
-			}
+				);
+		}
 
-			function CSVtoDFfunc_d3() {
+		function CSVtoDFfunc_d3() {
 			var DataFrame = dfjs.DataFrame;
 			console.log("CSVtoDF")
 			DataFrame.fromCSV('Datasets/BOUNDARIES_city_of_austin_park.csv').then(
@@ -156,9 +156,9 @@ function CSVtoDFfunc_d1() {
 					}
 					document.getElementById("checkBox").innerHTML = checkBox;
 				}
-			);
-			}
-			function CSVtoDFfunc_d4() {
+				);
+		}
+		function CSVtoDFfunc_d4() {
 			var DataFrame = dfjs.DataFrame;
 			console.log("CSVtoDF")
 			DataFrame.fromCSV('Datasets/Mecklenburg_County_Park_Locations.csv').then(
@@ -188,9 +188,9 @@ function CSVtoDFfunc_d1() {
 					}
 					document.getElementById("checkBox").innerHTML = checkBox;
 				}
-			);
-			}
-			function CSVtoDFfunc_d5() {
+				);
+		}
+		function CSVtoDFfunc_d5() {
 			var DataFrame = dfjs.DataFrame;
 			console.log("CSVtoDF")
 			DataFrame.fromCSV('Datasets/Open_Space_Boston.csv').then(
@@ -220,19 +220,19 @@ function CSVtoDFfunc_d1() {
 					}
 					document.getElementById("checkBox").innerHTML = checkBox;
 				}
-			);
-			}	
+				);
+		}	
 
 
 		/* Set the width of the side navigation to 250px */
 		function openNav() {
-		    document.getElementById("mySidenav").style.width = "250px";
+			document.getElementById("mySidenav").style.width = "250px";
 		}
 
 		/* Set the width of the side navigation to 0 */
 		function closeNav() {
-		    document.getElementById("mySidenav").style.width = "0";
+			document.getElementById("mySidenav").style.width = "0";
 		}
-		</script>
-	</body>
+	</script>
+</body>
 </html>
