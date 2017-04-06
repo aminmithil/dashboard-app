@@ -5,21 +5,21 @@
 	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
 	<link rel="stylesheet" type="text/css" href="css/main.css"/>
 
+	<!-- <script src="js/dataframe.js"></script> -->
+	<script src="js/jquery-3.2.0.min.js"></script>
+	<script src="js/dataframe.js"></script>
+	<script src="js/dataset.js"></script>
 </head>
 <body>
 	<h1>Open Space - Parks</h1>
 	
 	<div id="mySidenav" class="sidenav">
-
-		<!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
 		<a href="#" onclick="CSVtoDFfunc_d1()" id="d1">DataSet 1</a>
 		<a href="#" onclick="CSVtoDFfunc_d2()" id="d2">DataSet 2</a>
 		<a href="#" onclick="CSVtoDFfunc_d3()" id="d3">DataSet 3</a>
 		<a href="#" onclick="CSVtoDFfunc_d4()" id="d4">DataSet 4</a>
 		<a href="#" onclick="CSVtoDFfunc_d5()" id="d5">DataSet 5</a>
-
 	</div>
-	
 	
 	<div align="center">	
 		<div id="outputDiv" class="ShowTable"></div>
@@ -27,209 +27,27 @@
 
 	<div id="checkBox" align="center" class="ShowCheckBox">
 	</div>
-	
-	<script src="https://cdn.rawgit.com/Gmousse/dataframe-js/master/dist/dataframe.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 	<script type="text/javascript">
-		
-		function jsontoDFfunc() {
-			console.log("jsontoDF")
-			var DataFrame = dfjs.DataFrame;			
-			DataFrame.fromJSON("file:///"+window.location.pathname.replace(/^\/|\/$/g, '').slice(0,-14)+"dataframe.json").then(
-				df => { 
-					var arr = df.toArray();					
-					var heading = df.listColumns();
-					console.log('Column', df.listColumns());
-					var HTML = "<table class=striped border=1 width=100%><tr>";
-					for(k=0; k<heading.length; k++){
-						HTML += "<td>" + heading[k] + "</td>"
-					}
-					HTML += "</tr>"
-					for(i=0;i<arr.length;i++)
-					{
-						HTML +=  "<tr>"
-						for(j=0; j<arr[i].length; j++){
-							HTML += "<td align=center>"+arr[i][j]+"</td>";
-						}
-						HTML +=  "</tr>"
-					}
-					HTML += "</table>";
-					document.getElementById("outputDiv").innerHTML = HTML;
-				}
-				);
+		var d = new dataset();
+		function CSVtoDFfunc_d1(){
+			d.dataset1();
 		}
-
-		function CSVtoDFfunc_d1() {
-			var DataFrame = dfjs.DataFrame;
-			console.log("CSVtoDF")
-			DataFrame.fromCSV('Datasets/Parks_-_Locations_Chicago.csv').then(
-				df => { 
-					var arr = df.toArray();
-					var heading = df.listColumns();
-					console.log('Column', df.listColumns());
-					var HTML = "<table class=striped border=1 width=100%><tr>";
-					for(k=0; k<heading.length; k++){
-						HTML += "<td>" + heading[k] + "</td>"
-					}
-					HTML += "</tr>"
-					for(i=0;i<arr.length;i++)
-					{
-						HTML +=  "<tr>"
-						for(j=0; j<arr[i].length; j++){
-							HTML += "<td align=center>"+arr[i][j]+"</td>";
-						}
-						HTML +=  "</tr>"
-					}
-					HTML += "</table>";
-					document.getElementById("outputDiv").innerHTML = HTML;
-
-					var checkBox = "";
-					for(i=1; i<heading.length; i++){
-						checkBox += "<input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label>";
-					}
-					document.getElementById("checkBox").innerHTML = checkBox;
-				}
-				);
-		}
-
-
 		function CSVtoDFfunc_d2() {
-			var DataFrame = dfjs.DataFrame;
-			console.log("CSVtoDF")
-			DataFrame.fromCSV('Datasets/Department_of_Recreation_and_Parks__Facility_and_Park_Information_LA.csv').then(
-				df => { 
-					var arr = df.toArray();
-					var heading = df.listColumns();
-					console.log('Column', df.listColumns());
-					var HTML = "<table class=striped border=1 width=100%><tr>";
-					for(k=0; k<heading.length; k++){
-						HTML += "<td>" + heading[k] + "</td>"
-					}
-					HTML += "</tr>"
-					for(i=0;i<arr.length;i++)
-					{
-						HTML +=  "<tr>"
-						for(j=0; j<arr[i].length; j++){
-							HTML += "<td align=center>"+arr[i][j]+"</td>";
-						}
-						HTML +=  "</tr>"
-					}
-					HTML += "</table>";
-					document.getElementById("outputDiv").innerHTML = HTML;
-
-					var checkBox = "";
-					for(i=1; i<heading.length; i++){
-						checkBox += "<input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label>";
-					}
-					document.getElementById("checkBox").innerHTML = checkBox;
-				}
-				);
+			d.dataset2();
 		}
-
 		function CSVtoDFfunc_d3() {
-			var DataFrame = dfjs.DataFrame;
-			console.log("CSVtoDF")
-			DataFrame.fromCSV('Datasets/BOUNDARIES_city_of_austin_park.csv').then(
-				df => { 
-					var arr = df.toArray();
-					var heading = df.listColumns();
-					console.log('Column', df.listColumns());
-					var HTML = "<table class=striped border=1 width=100%><tr>";
-					for(k=0; k<heading.length; k++){
-						HTML += "<td>" + heading[k] + "</td>"
-					}
-					HTML += "</tr>"
-					for(i=0;i<arr.length;i++)
-					{
-						HTML +=  "<tr>"
-						for(j=0; j<arr[i].length; j++){
-							HTML += "<td align=center>"+arr[i][j]+"</td>";
-						}
-						HTML +=  "</tr>"
-					}
-					HTML += "</table>";
-					document.getElementById("outputDiv").innerHTML = HTML;
-
-					var checkBox = "";
-					for(i=1; i<heading.length; i++){
-						checkBox += "<input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label>";
-					}
-					document.getElementById("checkBox").innerHTML = checkBox;
-				}
-				);
+			d.dataset3();
 		}
 		function CSVtoDFfunc_d4() {
-			var DataFrame = dfjs.DataFrame;
-			console.log("CSVtoDF")
-			DataFrame.fromCSV('Datasets/Mecklenburg_County_Park_Locations.csv').then(
-				df => { 
-					var arr = df.toArray();
-					var heading = df.listColumns();
-					console.log('Column', df.listColumns());
-					var HTML = "<table class=striped border=1 width=100%><tr>";
-					for(k=0; k<heading.length; k++){
-						HTML += "<td>" + heading[k] + "</td>"
-					}
-					HTML += "</tr>"
-					for(i=0;i<arr.length;i++)
-					{
-						HTML +=  "<tr>"
-						for(j=0; j<arr[i].length; j++){
-							HTML += "<td align=center>"+arr[i][j]+"</td>";
-						}
-						HTML +=  "</tr>"
-					}
-					HTML += "</table>";
-					document.getElementById("outputDiv").innerHTML = HTML;
-
-					var checkBox = "";
-					for(i=1; i<heading.length; i++){
-						checkBox += "<input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label>";
-					}
-					document.getElementById("checkBox").innerHTML = checkBox;
-				}
-				);
+			d.dataset4();
 		}
 		function CSVtoDFfunc_d5() {
-			var DataFrame = dfjs.DataFrame;
-			console.log("CSVtoDF")
-			DataFrame.fromCSV('Datasets/Open_Space_Boston.csv').then(
-				df => { 
-					var arr = df.toArray();
-					var heading = df.listColumns();
-					console.log('Column', df.listColumns());
-					var HTML = "<table class=striped border=1 width=100%><tr>";
-					for(k=0; k<heading.length; k++){
-						HTML += "<td>" + heading[k] + "</td>"
-					}
-					HTML += "</tr>"
-					for(i=0;i<arr.length;i++)
-					{
-						HTML +=  "<tr>"
-						for(j=0; j<arr[i].length; j++){
-							HTML += "<td align=center>"+arr[i][j]+"</td>";
-						}
-						HTML +=  "</tr>"
-					}
-					HTML += "</table>";
-					document.getElementById("outputDiv").innerHTML = HTML;
-
-					var checkBox = "";
-					for(i=1; i<heading.length; i++){
-						checkBox += "<input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label>";
-					}
-					document.getElementById("checkBox").innerHTML = checkBox;
-				}
-				);
+			d.dataset5();
 		}	
-
-
-		/* Set the width of the side navigation to 250px */
 		function openNav() {
 			document.getElementById("mySidenav").style.width = "250px";
 		}
-
-		/* Set the width of the side navigation to 0 */
 		function closeNav() {
 			document.getElementById("mySidenav").style.width = "0";
 		}
