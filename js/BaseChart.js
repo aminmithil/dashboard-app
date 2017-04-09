@@ -1,33 +1,20 @@
-/* var s = document.createElement("script");
+var s = document.createElement("script");
 s.type = "text/javascript"; 
 document.head.appendChild(s);
-s.src = "js/Chart.min.js"; */
+s.src = "js/Chart.min.js";
 
 class BaseChart{
 	
 	constructor(area, settings) {
-
-		this.LoadScript();
 		this.area = area;
 		this.settings = settings;
 		this.a();
 	}
-
-	LoadScript(){
-       var scripts = document.getElementsByTagName('script');
-       var existAlready=[...scripts].some(a=>a.src=='js/Chart.min.js');
-       if(!existAlready){
-           var s = document.createElement("script");
-           s.setAttribute("src","js/Chart.min.js");
-           document.head.appendChild(s);
-       }
-    }
 	a() {
 		new Chart(this.area, this.settings);
 		console.log("BaseChart");
 	}	
 }
-
 
 class BarChart extends BaseChart {
 	constructor(area, settings) {
