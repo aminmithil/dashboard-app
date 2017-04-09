@@ -4,25 +4,74 @@ document.head.appendChild(s);
 s.src = "js/Chart.min.js";
 
 class BaseChart {
-	constructor(area, settings) {
+	constructor(area, settings){
 		this.area = area;
 		this.settings = settings;
 	}
-	a() {
+	draw_chart(area, settings) {
 		setTimeout(() => {
-			new Chart(this.area, this.settings);
+			new Chart(this.area, this.settings)
 		}, 200);
-		console.log("BaseChart");
 	}	
 }
 
-class BarChart extends BaseChart {
-	constructor(area, settings) {
-		super(area, settings);
+class ConfigureChart extends BaseChart {
+	constructor(chart_label, chart_data){
+		this.chart_label = chart_label;
+		this.chart_data = chart_data;
 	}
-	b() {
-		super.a();
+	create_settings() {
+
 	}
 }
 
+class Pie extends ConfigureChart {
+	constructor(type, data){
+		this.type = type;
+		this.data = data;
+	}
+	create_settings() {
+
+	}
+}
+
+class Bar extends ConfigureChart {
+	constructor(type, data){
+		this.type = type;
+		this.data = data;
+	}
+	create_settings() {
+		
+	}
+}
+
+class Line extends ConfigureChart {
+	constructor(type, data){
+		this.type = type;
+		this.data = data;
+	}
+	create_settings() {
+		
+	}
+}
+
+class PolarArea extends ConfigureChart {
+	constructor(type, data){
+		this.type = type;
+		this.data = data;
+	}
+	create_settings() {
+		
+	}
+}
+
+class Stack extends Bar {
+	constructor(type, data){
+		this.type = type;
+		this.data = data;
+	}
+	create_settings() {
+		
+	}
+}
 

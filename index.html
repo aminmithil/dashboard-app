@@ -49,18 +49,11 @@
 				        	data: [12, 56, 45, 23, 78, 23, 90],
 				        }
 				    ]
-				},
-			    options: {
-			        scales: {
-			            xAxes: [{
-			                stacked: true
-			            }],
-			        }
-			    }
+				}
 			}
 			var ctx = document.getElementById('lineChart');
-			var d = new BarChart(ctx, data1);
-			d.b();
+			var d = new BaseChart(ctx, data1);
+			d.draw_chart(ctx, data1);
 		</script>
 
 		<script type="text/javascript">
