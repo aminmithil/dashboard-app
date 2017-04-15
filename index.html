@@ -1,8 +1,24 @@
 <html>
 	<head>
 		<script src="js/BaseChart.js"></script>
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!--Import materialize.css-->
+		<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+		<link rel="stylesheet" type="text/css" href="css/main.css"/>
 	</head>
 	<body style="overflow: scroll;">
+
+	      	<div class="row">
+				<div class="input-field col s10">
+				    <select class="browser-default">
+				      <option value="" disabled selected>Choose your option</option>
+				      <option value="1">Option 1</option>
+				      <option value="2">Option 2</option>
+				      <option value="3">Option 3</option>
+				    </select>
+			  	</div>
+			</div>
+
 		<div style="width: 500px; height: 300px;">
 			<canvas id="lineChart"></canvas>
 		</div>
@@ -15,166 +31,12 @@
 		<div style="width: 500px; height: 300px;">
 			<canvas id="bubbleChart"></canvas>
 		</div>
-		
 		<script>
-			/* var data1 = {
-			    type: 'line',
-			    data: {
-					    labels: ["January", "February", "March", "April", "May", "June", "July"],
-					    datasets: [
-					        {	
-					            label: "My First dataset",
-					            fill: false,
-					            lineTension: 0.1,
-					            backgroundColor: "rgba(75,192,192,0.4)",
-					            borderColor: "rgba(75,192,192,1)",
-					            borderCapStyle: 'butt',
-					            borderDash: [],
-					            borderDashOffset: 0.0,
-					            borderJoinStyle: 'miter',
-					            pointBorderColor: "rgba(75,192,192,1)",
-					            pointBackgroundColor: "#fff",
-					            pointBorderWidth: 1,
-					            pointHoverRadius: 5,
-					            pointHoverBackgroundColor: "rgba(75,192,192,1)",
-					            pointHoverBorderColor: "rgba(220,220,220,1)",
-					            pointHoverBorderWidth: 2,
-					            pointRadius: 1,
-				            pointHitRadius: 10,
-				            data: [65, 59, 80, 81, 56, 55, 40],
-				            spanGaps: false,
-				        }
-				    ]
-				}
-			} */
 			var label = ["January", "February", "March", "April", "May", "June", "July"];
-			var data = [65, 59, 80, 81, 56, 55, 40];
+			var data = [65, 59, 80, 81, 56, 55, 80];
 			var ctx = document.getElementById('lineChart');
-			var d = new PolarArea(ctx, data, label);
+			var d = new Pie(ctx, data, label);
 			d.create_settings();
-		</script>
-
-		<script type="text/javascript">
-			/* var data = {
-				labels: ["January", "February", "March", "April", "May", "June", "July"],
-				datasets: [
-					{
-						label: "My First dataset",
-			            backgroundColor: [
-			                'rgba(255, 99, 132, 0.2)',
-			                'rgba(54, 162, 235, 0.2)',
-			                'rgba(255, 206, 86, 0.2)',
-			                'rgba(75, 192, 192, 0.2)',
-			                'rgba(153, 102, 255, 0.2)',
-			                'rgba(255, 159, 64, 0.2)'
-			            ],
-			            borderColor: [
-			                'rgba(255,99,132,1)',
-			                'rgba(54, 162, 235, 1)',
-			                'rgba(255, 206, 86, 1)',
-			                'rgba(75, 192, 192, 1)',
-			                'rgba(153, 102, 255, 1)',
-			                'rgba(255, 159, 64, 1)'
-			            ],
-			            borderWidth: 1,
-			            data: [77, 66, 55, 44, 33, 22, 11],
-					},
-					{
-						label: "My Second dataset",
-			            backgroundColor: [
-			                'rgba(255, 99, 132, 0.2)',
-			                'rgba(54, 162, 235, 0.2)',
-			                'rgba(255, 206, 86, 0.2)',
-			                'rgba(75, 192, 192, 0.2)',
-			                'rgba(153, 102, 255, 0.2)',
-			                'rgba(255, 159, 64, 0.2)'
-			            ],
-			            borderColor: [
-			                'rgba(255,99,132,1)',
-			                'rgba(54, 162, 235, 1)',
-			                'rgba(255, 206, 86, 1)',
-			                'rgba(75, 192, 192, 1)',
-			                'rgba(153, 102, 255, 1)',
-			                'rgba(255, 159, 64, 1)'
-			            ],
-			            borderWidth: 1,
-			            data: [11, 22, 33, 44, 55, 66, 77],
-					}
-				]
-			};
-			var ctx = document.getElementById('barChart').getContext('2d');
-			var myBarChart = new Chart(ctx, {
-			    type: 'bar',
-			    data: data,
-			    options: {
-			        scales: {
-			            xAxes: [{
-			                stacked: true
-			            }],
-			        }
-			    },
-			}); */
-		</script>
-		<script>
-			/* var data = {
-			    labels: [
-			        "Red",
-			        "Blue",
-			        "Yellow"
-			    ],
-			    datasets: [
-			        {
-			            data: [300, 50, 100],
-			            backgroundColor: [
-			                "#FF6384",
-			                "#36A2EB",
-			                "#FFCE56"
-			            ],
-			            hoverBackgroundColor: [
-			                "#FF6384",
-			                "#36A2EB",
-			                "#FFCE56"
-			            ]
-			        }]
-			};
-			var ctx = document.getElementById('pieChart').getContext('2d');
-			var myPieChart = new Chart(ctx,{
-			    type: 'pie',
-			    data: data
-			}); */
-		</script>
-		<script>
-			/* var data = {
-			    datasets: [
-			        {
-			            label: 'First Dataset',
-			            data: [
-			                {
-			                    x: 20,
-			                    y: 30,
-			                    r: 15
-			                },
-			                {
-			                    x: 40,
-			                    y: 10,
-			                    r: 10
-			                },
-			               	{
-			               		x: 10,
-			               		y: 50,
-			               		r: 23
-			               	}
-			            ],
-			            backgroundColor:"#FF6384",
-			            hoverBackgroundColor: "#FF6384",
-			        }]
-			};
-			var ctx = "bubbleChart";
-			var myBubbleChart = new Chart(ctx,{
-			    type: 'bubble',
-			    data: data
-			});
-	*/
 		</script>
 	</body>
 </html>

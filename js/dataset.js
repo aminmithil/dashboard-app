@@ -1,4 +1,4 @@
-var DataFrame = dfjs.DataFrame;
+var DataFrame = dfjs.DataFrame;	
 class Dataset {
 	viewDataset(a){
 		if(a == 1){
@@ -22,11 +22,20 @@ class Dataset {
 					HTML += "</table>";
 					document.getElementById("outputDiv").innerHTML = HTML;
 
-					var checkBox = "";
-					for(var i=1; i<heading.length; i++){
-						checkBox += "<input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label>";
+					var dfArray = df.select('PARK NAME').toArray();
+					console.log('data', dfArray);
+					
+					var checkBox = "<table border=1>";
+					for(var i=0; i<heading.length; i++){
+						if(i%6 == 0)
+							checkBox += "<tr><td><input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td>";
+						else if((i+1)%6 == 0)
+							checkBox += "<td><input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td></tr>";
+						else
+							checkBox += "<td><input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td>";
 					}
-					document.getElementById("checkBox").innerHTML = checkBox; 
+					checkBox += "</table>" 
+					document.getElementById("checkBox").innerHTML = checkBox;
 				}
 			);	
 		}
@@ -51,10 +60,16 @@ class Dataset {
 					HTML += "</table>";
 					document.getElementById("outputDiv").innerHTML = HTML;
 
-					var checkBox = "";
-					for(var i=1; i<heading.length; i++){
-						checkBox += "<input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label>";
+					var checkBox = "<table border=1>";
+					for(var i=0; i<heading.length; i++){
+						if(i%6 == 0)
+							checkBox += "<tr><td><input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td>";
+						else if((i+1)%6 == 0)
+							checkBox += "<td><input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td></tr>";
+						else
+							checkBox += "<td><input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td>";
 					}
+					checkBox += "</table>" 
 					document.getElementById("checkBox").innerHTML = checkBox;
 				}
 			);
@@ -80,10 +95,16 @@ class Dataset {
 					HTML += "</table>";
 					document.getElementById("outputDiv").innerHTML = HTML;
 
-					var checkBox = "";
-					for(var i=1; i<heading.length; i++){
-						checkBox += "<input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label>";
+					var checkBox = "<table border=1>";
+					for(var i=0; i<heading.length; i++){
+						if(i%6 == 0)
+							checkBox += "<tr><td><input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td>";
+						else if((i+1)%6 == 0)
+							checkBox += "<td><input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td></tr>";
+						else
+							checkBox += "<td><input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td>";
 					}
+					checkBox += "</table>" 
 					document.getElementById("checkBox").innerHTML = checkBox;
 				}
 			);
@@ -109,10 +130,16 @@ class Dataset {
 					HTML += "</table>";
 					document.getElementById("outputDiv").innerHTML = HTML;
 
-					var checkBox = "";
-					for(var i=1; i<heading.length; i++){
-						checkBox += "<input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label>";
+					var checkBox = "<table border=1>";
+					for(var i=0; i<heading.length; i++){
+						if(i%6 == 0)
+							checkBox += "<tr><td><input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td>";
+						else if((i+1)%6 == 0)
+							checkBox += "<td><input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td></tr>";
+						else
+							checkBox += "<td><input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td>";
 					}
+					checkBox += "</table>" 
 					document.getElementById("checkBox").innerHTML = checkBox;
 				}
 			);
@@ -138,10 +165,16 @@ class Dataset {
 					HTML += "</table>";
 					document.getElementById("outputDiv").innerHTML = HTML;
 
-					var checkBox = "";
-					for(var i=1; i<heading.length; i++){
-						checkBox += "<input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label>";
+					var checkBox = "<table border=1>";
+					for(var i=0; i<heading.length; i++){
+						if(i%6 == 0)
+							checkBox += "<tr><td><input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td>";
+						else if((i+1)%6 == 0)
+							checkBox += "<td><input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td></tr>";
+						else
+							checkBox += "<td><input type=checkbox id=" + i + " /><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td>";
 					}
+					checkBox += "</table>" 
 					document.getElementById("checkBox").innerHTML = checkBox;
 				}
 			);
