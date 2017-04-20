@@ -11,7 +11,7 @@ class BaseChart {
 			this.area = area;
 			this.settings = settings;
 			new Chart(this.area, this.settings);
-		}, 100); 
+		}, 200); 
 	}	
 }
 
@@ -49,14 +49,18 @@ class Pie extends ConfigureChart {
 	createSettings() {
 		this.chartData = {};
 		this.chartData["type"] = this.createType();
-		this.chartData["data"] = {
-			labels : this.createLabel(),
-			datasets : [{
-				data : this.createData(),
-			}]
-		}
+
+		this.dataset = {};
+		this.dataset["data"] = this.createData();
+		this.data = [];
+		this.data.push(this.dataset);
+
+		this.tempData = {};
+		this.tempData["datasets"] = this.data;
+
+		this.chartData["data"] = this.tempData;
+
 		return this.chartData;
-		
 	}
 
 	plotChart(){
@@ -87,14 +91,18 @@ class Bar extends ConfigureChart {
 	createSettings() {
 		this.chartData = {};
 		this.chartData["type"] = this.createType();
-		this.chartData["data"] = {
-			labels : this.createLabel(),
-			datasets : [{
-				data : this.createData(),
-			}]
-		}
+
+		this.dataset = {};
+		this.dataset["data"] = this.createData();
+		this.data = [];
+		this.data.push(this.dataset);
+
+		this.tempData = {};
+		this.tempData["datasets"] = this.data;
+
+		this.chartData["data"] = this.tempData;
+
 		return this.chartData;
-		
 	}
 
 	plotChart(){
@@ -125,14 +133,18 @@ class Line extends ConfigureChart {
 	createSettings() {
 		this.chartData = {};
 		this.chartData["type"] = this.createType();
-		this.chartData["data"] = {
-			labels : this.createLabel(),
-			datasets : [{
-				data : this.createData(),
-			}]
-		}
+
+		this.dataset = {};
+		this.dataset["data"] = this.createData();
+		this.data = [];
+		this.data.push(this.dataset);
+
+		this.tempData = {};
+		this.tempData["datasets"] = this.data;
+
+		this.chartData["data"] = this.tempData;
+
 		return this.chartData;
-		
 	}
 
 	plotChart(){
@@ -163,14 +175,18 @@ class PolarArea extends ConfigureChart {
 	createSettings() {
 		this.chartData = {};
 		this.chartData["type"] = this.createType();
-		this.chartData["data"] = {
-			labels : this.createLabel(),
-			datasets : [{
-				data : this.createData(),
-			}]
-		}
+
+		this.dataset = {};
+		this.dataset["data"] = this.createData();
+		this.data = [];
+		this.data.push(this.dataset);
+
+		this.tempData = {};
+		this.tempData["datasets"] = this.data;
+
+		this.chartData["data"] = this.tempData;
+
 		return this.chartData;
-		
 	}
 
 	plotChart(){
@@ -179,13 +195,44 @@ class PolarArea extends ConfigureChart {
 }
 
 class Stack extends Bar {
-	constructor(area, data){
-		super(area, data);
+	constructor(area, data, label){
+		super();
 		this.area = area;
 		this.data = data;
+		this.label = label;
 	}
-	create_settings() {
-		super.create_settings();
+
+	createType() {
+		return 'polarArea';
+	}
+
+	createLabel() {
+		return this.label;
+	}
+
+	createData(){
+		return this.data;
+	}
+
+	createSettings() {
+		this.chartData = {};
+		this.chartData["type"] = this.createType();
+
+		this.dataset = {};
+		this.dataset["data"] = this.createData();
+		this.data = [];
+		this.data.push(this.dataset);
+
+		this.tempData = {};
+		this.tempData["datasets"] = this.data;
+
+		this.chartData["data"] = this.tempData;
+
+		return this.chartData;
+	}
+
+	plotChart(){
+		super.create_settings(this.area, this.createSettings());
 	}
 }
 
