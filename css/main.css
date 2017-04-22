@@ -19,10 +19,14 @@
     width: 200px;
     margin-top: 10px;
 }
-#plotChart {
+#btn_Statistics {
     display: none;
-    margin-left: 550px;
-    margin-right: 550px;
+    width: 200px;
+    margin-top: 10px;
+}
+#btn_PlotChart {
+    width: 200px;
+    margin-top: 10px;
 }
 #checkBox {
     margin-left: 15px;
@@ -31,7 +35,7 @@ body{
 	background-color: #FBFCFC;
 }
 
-h1 {
+h3 {
 	margin-left: 80px;
 	color: #C70039;
 }
@@ -42,5 +46,9 @@ h1 {
 }
 
 #filterArea {
+    display: none;
+}
+
+#statisticsArea {
     display: none;
 }
