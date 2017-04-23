@@ -26,7 +26,7 @@ class ConfigureChart extends BaseChart {
 	}
 }
 
-class Pie extends ConfigureChart {
+class PieChart extends ConfigureChart {
 	constructor(area, data, label){
 		super();
 		this.area = area;
@@ -50,16 +50,16 @@ class Pie extends ConfigureChart {
 		this.chartData = {};
 		this.chartData["type"] = this.createType();
 
-		this.dataset = {};
-		this.dataset["data"] = this.createData();
+		this.datasets = {};
+		this.datasets["data"] = this.createData();
 		this.data = [];
-		this.data.push(this.dataset);
+		this.data.push(this.datasets);
 
 		this.tempData = {};
 		this.tempData["datasets"] = this.data;
+		this.tempData["labels"] = this.createLabel();
 
 		this.chartData["data"] = this.tempData;
-
 		return this.chartData;
 	}
 
@@ -68,7 +68,7 @@ class Pie extends ConfigureChart {
 	}
 }
 
-class Bar extends ConfigureChart {
+class BarChart extends ConfigureChart {
 	constructor(area, data, label){
 		super();
 		this.area = area;
@@ -92,16 +92,16 @@ class Bar extends ConfigureChart {
 		this.chartData = {};
 		this.chartData["type"] = this.createType();
 
-		this.dataset = {};
-		this.dataset["data"] = this.createData();
+		this.datasets = {};
+		this.datasets["data"] = this.createData();
 		this.data = [];
-		this.data.push(this.dataset);
+		this.data.push(this.datasets);
 
 		this.tempData = {};
 		this.tempData["datasets"] = this.data;
+		this.tempData["labels"] = this.createLabel();
 
 		this.chartData["data"] = this.tempData;
-
 		return this.chartData;
 	}
 
@@ -110,7 +110,7 @@ class Bar extends ConfigureChart {
 	}
 }
 
-class Line extends ConfigureChart {
+class LineChart extends ConfigureChart {
 	constructor(area, data, label){
 		super();
 		this.area = area;
@@ -134,16 +134,16 @@ class Line extends ConfigureChart {
 		this.chartData = {};
 		this.chartData["type"] = this.createType();
 
-		this.dataset = {};
-		this.dataset["data"] = this.createData();
+		this.datasets = {};
+		this.datasets["data"] = this.createData();
 		this.data = [];
-		this.data.push(this.dataset);
+		this.data.push(this.datasets);
 
 		this.tempData = {};
 		this.tempData["datasets"] = this.data;
+		this.tempData["labels"] = this.createLabel();
 
 		this.chartData["data"] = this.tempData;
-
 		return this.chartData;
 	}
 
@@ -194,7 +194,7 @@ class PolarArea extends ConfigureChart {
 	}
 }
 
-class Stack extends Bar {
+class StackChart extends BarChart {
 	constructor(area, data, label){
 		super();
 		this.area = area;

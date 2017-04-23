@@ -37,7 +37,7 @@
 	</div>
 
 	<div id="filterArea">
-		<h5 align="center">Please select the Filters to Exclude(Categorical Value)</h5>
+		<h5 align="center" id="label_exclude">Please select the Filters to Exclude(Categorical Value)</h5>
 		<div id="excludeArea" align="center"></div>
 		<h5 align="center" id="label_condition">Please Select the filter Condition</h5>
 		<div align="center" id="condition">
@@ -51,15 +51,15 @@
 		<div id="filterValue" align="center"></div>
 		<h5 align="center">Select Chart</h5>
 		<div id="chartSelectionArea" align="center">
-			<input type="checkbox" class="filled-in" id="bar">
+			<input type="checkbox" class="filled-in" id="bar" name="chart">
       		<label for="bar">Bar</label>
-      		<input type="checkbox" class="filled-in" id="line">
+      		<input type="checkbox" class="filled-in" id="line" name="chart">
       		<label for="line">Line</label>
-      		<input type="checkbox" class="filled-in" id="pie">
+      		<input type="checkbox" class="filled-in" id="pie" name="chart">
       		<label for="pie">Pie</label>
-      		<input type="checkbox" class="filled-in" id="stacked">
+      		<input type="checkbox" class="filled-in" id="stacked" name="chart">
       		<label for="stacked">Stacked</label>
-      		<input type="checkbox" class="filled-in" id="pivot">
+      		<input type="checkbox" class="filled-in" id="pivot" name="chart">
       		<label for="pivot">Pivot</label>
 		</div>
 		<div align="center">
@@ -69,6 +69,27 @@
 
 	<div id="statisticsArea">
 		<p>Hello Statistics Area</p>
+	</div>
+
+	<div>
+		<div>
+			<canvas id="barChart"></canvas>
+		</div>	
+
+		<div>
+			<canvas id="lineChart"></canvas>
+		</div>
+
+		<div>
+			<canvas id="pieChart"></canvas>
+		</div>
+
+		<div>
+			<canvas id="stackedChart"></canvas>
+		</div>	
+		<div>
+			<canvas id="pivotChart"></canvas>
+		</div>	
 	</div>
 
 	<script type="text/javascript">
@@ -145,8 +166,16 @@
 				document.getElementById('condition').style.display = 'none';
 				document.getElementById('filterValue').style.display = 'none';
 				document.getElementById('label_condition').style.display = 'none';
+			} else {
+				document.getElementById('condition').style.display = 'block';
+				document.getElementById('filterValue').style.display = 'block';
+				document.getElementById('label_condition').style.display = 'block';
 			}
-
+			if(stringColumns.length == 0) {
+				document.getElementById('label_exclude').style.display = 'none';
+			} else {
+				document.getElementById('label_exclude').style.display = 'block';
+			}
 			var heading = df.listColumns();
 			var excludeCheckBox = "<table class=bordered>";
 			var className = "filled-in";
@@ -199,7 +228,121 @@
 		}
 
 		function generateChartData(stringColumns, numericColumns, df) {
+			var excludedData = document.getElementsByName('excludeCheckBox');
+			var excludeValue = [];
+			for(var i=0; i<excludedData.length; i++) {
+				if(excludedData[i].checked) {
+					excludeValue.push(excludedData[i].id);
+				}
+			}
 
+			var heading = df.listColumns();
+			var conditionStringColumns = [];
+			//console.log('dfArray', df.select(stringColumns[0]).toArray());
+			//console.log('string columnName', stringColumns);
+			for(var i=0; i<stringColumns.length; i++) {
+				var columnName = heading[stringColumns[i]];
+				var dfArray = df.select(columnName).toArray();
+				//console.log('dfArray', dfArray[0]);
+				for(var j=0; j<excludeValue.length; j++) {
+					if(dfArray[j][0] == excludeValue[j]) {
+						conditionStringColumns.push(columnName);
+					}
+				}
+			}
+			console.log('conditionStringColumns', conditionStringColumns);
+			console.log('excludeValue', excludeValue);
+			var dataframe = df;
+			if(conditionStringColumns.length != 0) {
+				for(var i=0; i<conditionStringColumns.length; i++) {
+					dataframe = dataframe.filter(row => row.get(conditionStringColumns[i]) != excludeValue[i]);
+				} 
+			}
+
+			//console.log('new dataframe', dataframe.toArray());
+
+			var condition = document.getElementsByName('group1');
+			var filterValue = document.getElementsByName('conditionValue');
+			for(var i=0; i<condition.length; i++) {
+				if(condition[i].checked) {
+					for(var j=0; j<filterValue.length; j++) {
+						if(filterValue[j].checked){
+							var condi = condition[i].id;
+							var value = filterValue[j].value;
+
+							console.log('condi', condi);
+							console.log('value', value);
+							for(var k=0; k<numericColumns.length; k++) {
+								if(condi == 'gt') {
+									dataframe = dataframe.filter(row => row.get(heading[numericColumns[k]]) >= Number(value));
+								} else if(condi == 'lt') {
+									dataframe = dataframe.filter(row => row.get(heading[numericColumns[k]]) <= Number(value));
+								} else if(condi == 'et') {
+									dataframe = dataframe.filter(row => row.get(heading[numericColumns[k]]) == Number(value));
+								}
+							}
+						}
+					}
+				}
+			}
+
+			var label = [];
+			for(var i=0; i<stringColumns.length; i++) {
+				var dataframeArray = dataframe.select(heading[stringColumns[i]]).distinct(heading[stringColumns[i]]).toArray();
+				for(var j=0; j<dataframeArray.length; j++) {
+					label.push(dataframeArray[j][0]);
+				}
+			} 
+
+			console.log('final', label);
+
+			var j=0;
+			var data = [];
+			for(var i=0; i<stringColumns.length; i++) {
+				var dataframeArray = dataframe.select(heading[stringColumns[i]]).distinct(heading[stringColumns[i]]).count();
+				console.log('dataframe Array', dataframeArray);
+				dataframeArray = dataframeArray+j;
+				while(dataframeArray != j) {
+					var count = dataframe.filter(row => row.get(heading[stringColumns[i]]) == label[j]).count();
+					data.push(count);
+					j++;
+				}
+			}
+
+			generateChart(data, label);
+		}
+
+		function generateChart(data, label) {
+			var chartType = document.getElementsByName('chart');
+
+			console.log('chart data', data);
+			console.log('chart label', label);
+			for(var i=0; i<chartType.length; i++) {
+				if(chartType[i].checked) {
+					var chartTyp = chartType[i].id;
+					if(chartTyp == "bar") {
+						// bar
+						var area = 'barChart';
+						var bar = new BarChart(area, data, label);
+						//console.log('settings', bar.createSettings());
+						bar.plotChart();
+					} else if (chartTyp == "line") {
+						// line
+						var area = 'lineChart';
+						var line = new LineChart(area, data, label);
+						line.plotChart();
+					} else if (chartTyp == "pie") {
+						// pie
+						var area = 'pieChart';
+						var pie = new PieChart(area, data, label);
+						pie.plotChart();
+					} else if (chartTyp == "stacked") {
+						// stacked
+					} else if (chartTyp == "pivotchartTyp") {
+						// pivot
+					}
+				}
+			}
 		}
 
 		function dataset1() {
@@ -315,32 +458,39 @@
 				df => { 
 					var arr = df.toArray();
 					var heading = df.listColumns();
-					var HTML = "<table class=bordered border=1 width=100%><tr>";
+					var HTML = "<table class=bordered width=100%><tr>";
 					for(var k=0; k<heading.length; k++){
-						HTML += "<td>" + heading[k] + "</td>"
+						HTML += "<td>" + heading[k] + "</td>";
 					}
-					HTML += "</tr>"
+					HTML += "</tr>";
 					for(var i=0;i<arr.length;i++)
 					{
-						HTML +=  "<tr>"
+						HTML +=  "<tr>";
 						for(var j=0; j<arr[i].length; j++){
 							HTML += "<td align=center>"+arr[i][j]+"</td>";
 						}
-						HTML +=  "</tr>"
+						HTML +=  "</tr>";
 					}
 					HTML += "</table>";
 					document.getElementById("outputDiv").innerHTML = HTML;
 
-					var checkBox = "<table border=1>";
+					//var dfArray = df.toArray();
+					//console.log('data', dfArray);
+
+					//if(df.select('ARCHERY RANGE').toArray()[0][0] === )
+					//console.log('where clause', isNumber(df.select('ARCHERY RANGE').toArray()[0][0]));
+					//console.log('check number', isNumber("Mithil"))
+					
+					var checkBox = "<table class=bordered>";
 					for(var i=0; i<heading.length; i++){
 						if(i%6 == 0)
-							checkBox += "<tr><td><input type=checkbox id=" + i + " value=" + heading[i] + " class=" + columns +"><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td>";
+							checkBox += "<tr><td><input type=checkbox id=" + i + " name=" + columns +" class=filled-in><label for="+i+">" + heading[i] + "</label></td>";
 						else if((i+1)%6 == 0)
-							checkBox += "<td><input type=checkbox id=" + i + " value=" + heading[i] + " class=" + columns +"><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td></tr>";
+							checkBox += "<td><input type=checkbox id=" + i + " name=" + columns +" class=filled-in><label for="+i+">" + heading[i] + "</label></td></tr>";
 						else
-							checkBox += "<td><input type=checkbox id=" + i + " value=" + heading[i] + " class=" + columns +"><label for="+i+" style=margin-right:10px;>" + heading[i] + "</label></td>";
+							checkBox += "<td><input type=checkbox id=" + i + " name=" + columns +" class=filled-in><label for="+i+">" + heading[i] + "</label></td>";
 					}
-					checkBox += "</table>" 
+					checkBox += "</table>";
 					document.getElementById("checkBox").innerHTML = checkBox;
 
 					document.getElementById("btn_AddFilter").style.display = 'block';
