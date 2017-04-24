@@ -238,12 +238,10 @@
 
 			var heading = df.listColumns();
 			var conditionStringColumns = [];
-			//console.log('dfArray', df.select(stringColumns[0]).toArray());
-			//console.log('string columnName', stringColumns);
 			for(var i=0; i<stringColumns.length; i++) {
 				var columnName = heading[stringColumns[i]];
 				var dfArray = df.select(columnName).toArray();
-				//console.log('dfArray', dfArray[0]);
+				
 				for(var j=0; j<excludeValue.length; j++) {
 					if(dfArray[j][0] == excludeValue[j]) {
 						conditionStringColumns.push(columnName);
@@ -258,8 +256,6 @@
 					dataframe = dataframe.filter(row => row.get(conditionStringColumns[i]) != excludeValue[i]);
 				} 
 			}
-
-			//console.log('new dataframe', dataframe.toArray());
 
 			var condition = document.getElementsByName('group1');
 			var filterValue = document.getElementsByName('conditionValue');
@@ -366,13 +362,6 @@
 					HTML += "</table>";
 					document.getElementById("outputDiv").innerHTML = HTML;
 
-					//var dfArray = df.toArray();
-					//console.log('data', dfArray);
-
-					//if(df.select('ARCHERY RANGE').toArray()[0][0] === )
-					//console.log('where clause', isNumber(df.select('ARCHERY RANGE').toArray()[0][0]));
-					//console.log('check number', isNumber("Mithil"))
-					
 					var checkBox = "<table class=bordered>";
 					for(var i=0; i<heading.length; i++){
 						if(i%6 == 0)
@@ -420,13 +409,6 @@
 					HTML += "</table>";
 					document.getElementById("outputDiv").innerHTML = HTML;
 
-					//var dfArray = df.toArray();
-					//console.log('data', dfArray);
-
-					//if(df.select('ARCHERY RANGE').toArray()[0][0] === )
-					//console.log('where clause', isNumber(df.select('ARCHERY RANGE').toArray()[0][0]));
-					//console.log('check number', isNumber("Mithil"))
-					
 					var checkBox = "<table class=bordered>";
 					for(var i=0; i<heading.length; i++){
 						if(i%6 == 0)
@@ -474,13 +456,6 @@
 					HTML += "</table>";
 					document.getElementById("outputDiv").innerHTML = HTML;
 
-					//var dfArray = df.toArray();
-					//console.log('data', dfArray);
-
-					//if(df.select('ARCHERY RANGE').toArray()[0][0] === )
-					//console.log('where clause', isNumber(df.select('ARCHERY RANGE').toArray()[0][0]));
-					//console.log('check number', isNumber("Mithil"))
-					
 					var checkBox = "<table class=bordered>";
 					for(var i=0; i<heading.length; i++){
 						if(i%6 == 0)
@@ -528,13 +503,6 @@
 					HTML += "</table>";
 					document.getElementById("outputDiv").innerHTML = HTML;
 
-					//var dfArray = df.toArray();
-					//console.log('data', dfArray);
-
-					//if(df.select('ARCHERY RANGE').toArray()[0][0] === )
-					//console.log('where clause', isNumber(df.select('ARCHERY RANGE').toArray()[0][0]));
-					//console.log('check number', isNumber("Mithil"))
-					
 					var checkBox = "<table class=bordered>";
 					for(var i=0; i<heading.length; i++){
 						if(i%6 == 0)
@@ -582,13 +550,6 @@
 					HTML += "</table>";
 					document.getElementById("outputDiv").innerHTML = HTML;
 
-					//var dfArray = df.toArray();
-					//console.log('data', dfArray);
-
-					//if(df.select('ARCHERY RANGE').toArray()[0][0] === )
-					//console.log('where clause', isNumber(df.select('ARCHERY RANGE').toArray()[0][0]));
-					//console.log('check number', isNumber("Mithil"))
-					
 					var checkBox = "<table class=bordered>";
 					for(var i=0; i<heading.length; i++){
 						if(i%6 == 0)
