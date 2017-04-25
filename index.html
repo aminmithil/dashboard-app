@@ -5,6 +5,7 @@
 		<!--Import materialize.css-->
 		<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
 		<link rel="stylesheet" type="text/css" href="css/main.css"/>
+		<script type="text/javascript" src="js/Chart.min.js"></script>
 	</head>
 	<body style="overflow: scroll;">
 
@@ -25,7 +26,7 @@
 			    labels: ["January", "February", "March", "April", "May", "June", "July"],
 			    datasets: [
 			        {
-			            label: "My First dataset",
+			            label: ["January", "February", "March", "April", "May", "June", "July"],
 			            backgroundColor: [
 			                'rgba(255, 99, 132, 0.2)',
 			                'rgba(54, 162, 235, 0.2)',
@@ -55,14 +56,16 @@
 			    labels: ["January", "February", "March", "April", "May", "June", "July"],
 			    datasets: [
 			        {
-			            label: "My First dataset",
 			            backgroundColor: "rgba(75,192,192,0.4)",
-			            data: [65, 59, 80, 81, 56, 55, 40],
+			            data: [65, 27, 94],
 			        },
 			        {
-			        	label: "Hello",
-			        	backgroundColor: "rgba(255,192,192,0.4)",
-			        	data: [25, 54, 56, 6, 67, 23, 33],
+			            backgroundColor: "rgba(250,192,192,0.4)",
+			            data: [36, 27, 95, 23],
+			        },
+			        {
+			            backgroundColor: "rgba(75,192,192,0.4)",
+			            data: [65, 25, 84, 96],
 			        }
 			    ]
 			};
@@ -78,6 +81,18 @@
 			        }
 			    }
 			});
+			var consoleData = {
+			    type: 'bar',
+			    data: data,
+			    options: {
+			        scales: {
+			            yAxes: [{
+			                stacked: true
+			            }]
+			        }
+			    }
+			};
+			console.log('consoleData', consoleData);
 		</script>
 	</body>
 </html>

@@ -57,9 +57,9 @@
       		<label for="line">Line</label>
       		<input type="checkbox" class="filled-in" id="pie" name="chart">
       		<label for="pie">Pie</label>
-      		<input type="checkbox" class="filled-in" id="stacked" name="chart">
+      		<input type="checkbox" class="filled-in" id="stacked" name="chart" disabled="true">
       		<label for="stacked">Stacked</label>
-      		<input type="checkbox" class="filled-in" id="pivot" name="chart">
+      		<input type="checkbox" class="filled-in" id="pivot" name="chart" disabled="true">
       		<label for="pivot">Pivot</label>
 		</div>
 		<div align="center">
@@ -95,7 +95,7 @@
 	<script type="text/javascript">
 		var DataFrame = dfjs.DataFrame;	
 		var columns = "columns";
-		
+		var strColumns;
 		function isNumber(n) {
 			return !isNaN(parseFloat(n)) && isFinite(n);
 		}
@@ -162,6 +162,11 @@
 		}
 
 		function displayExcludeArea(stringColumns, numericColumns, df) {
+			if(numericColumns.length >= 1) {
+				document.getElementById('stacked').disabled = false;
+				document.getElementById('pivot').disabled = false;
+			}
+
 			if(numericColumns.length == 0) {
 				document.getElementById('condition').style.display = 'none';
 				document.getElementById('filterValue').style.display = 'none';
@@ -305,10 +310,30 @@
 				}
 			}
 
-			generateChart(data, label);
+			var finalColumnData = [];
+			for(var i=0; i<stringColumns.length; i++) {
+				var combineColumn = [];
+				combineColumn.push(heading[stringColumns[i]]);
+				for(var j=0; j<numericColumns.length; j++) {
+					combineColumn.push(heading[numericColumns[j]]);
+				}
+				finalColumnData.push(combineColumn);
+			}
+
+			var pivotData = [];
+			for(var i=0; i<finalColumnData.length; i++) {
+				var d = df.restructure(finalColumnData[i]).toArray();
+				pivotData.push(d);
+			}
+
+			console.log('pivotData', pivotData);
+			if(numericColumns.length == 0)
+				generateChart(data, label, []);
+			else
+				generateChart(data, label, pivotData);
 		}
 
-		function generateChart(data, label) {
+		function generateChart(data, label, pivotData) {
 			var chartType = document.getElementsByName('chart');
 
 			console.log('chart data', data);
@@ -320,7 +345,6 @@
 						// bar
 						var area = 'barChart';
 						var bar = new BarChart(area, data, label);
-						//console.log('settings', bar.createSettings());
 						bar.plotChart();
 					} else if (chartTyp == "line") {
 						// line
@@ -334,8 +358,14 @@
 						pie.plotChart();
 					} else if (chartTyp == "stacked") {
 						// stacked
-					} else if (chartTyp == "pivotchartTyp") {
+						var area = 'stackedChart';
+						var stack = new StackChart(area, data, label, pivotData);
+						stack.plotChart();
+					} else if (chartTyp == "pivot") {
 						// pivot
+						var area = 'pivotChart';
+						var pivot = new PivotChart(area, data, label, pivotData);
+						pivot.plotChart();
 					}
 				}
 			}

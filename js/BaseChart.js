@@ -22,6 +22,10 @@ class ConfigureChart extends BaseChart {
 	create_settings(chart_area, chart_data) {
 		this.chart_area = chart_area;
 		this.chart_data = chart_data;
+		var config = new Configuration();
+		this.temp = this.chartData["data"]["datasets"][0];
+		this.temp["backgroundColor"] = config.backGroundColour();
+		
 		super.draw_chart(this.chart_area, this.chart_data);
 	}
 }
@@ -152,40 +156,73 @@ class LineChart extends ConfigureChart {
 	}
 }
 
-class PolarArea extends ConfigureChart {
-	constructor(area, data, label){
+class PivotChart extends ConfigureChart {
+	constructor(area, data, label, pivotData){
 		super();
 		this.area = area;
 		this.data = data;
 		this.label = label;
+		this.pivotData = pivotData;
 	}
 
 	createType() {
-		return 'polarArea';
+		return 'bar';
 	}
 
 	createLabel() {
 		return this.label;
 	}
 
-	createData(){
-		return this.data;
+	createData() {
+		var config = new Configuration();
+		this.datasets = [];
+
+		this.tempLabel = [];
+		console.log('pivotData', this.pivotData);
+		for(this.i=0; this.i<this.pivotData.length; this.i++) {
+			this.obj = {};
+			this.temDta = [];
+			for(this.k=0; this.k<this.pivotData[0].length; this.k++) {
+				this.tempLabel.push(this.pivotData[0][this.k][0]);
+				for(this.j=1; this.j<this.pivotData[0][this.k].length; this.j++) {
+					this.temDta.push(Number(this.pivotData[0][this.k][this.j]));
+				}
+				this.obj["data"] = this.temDta;
+			}
+			this.datasets.push(this.obj);
+		}
+
+		this.newObj = {};
+		this.newObj["data"] = this.data;
+
+		this.datasets.push(this.newObj);
+
+		this.finalData = {}
+		this.finalData["labels"] = this.tempLabel;
+		this.finalData["datasets"] = this.datasets;
+		return this.finalData;
 	}
 
 	createSettings() {
 		this.chartData = {};
 		this.chartData["type"] = this.createType();
 
-		this.dataset = {};
-		this.dataset["data"] = this.createData();
-		this.data = [];
-		this.data.push(this.dataset);
+		this.chartData["data"] = this.createData();
 
-		this.tempData = {};
-		this.tempData["datasets"] = this.data;
+		this.axes = [];
+		this.stacked = {};
+		this.stacked["stacked"] = true;
+		this.axes.push(this.stacked);
 
-		this.chartData["data"] = this.tempData;
+		this.scales = {};
+		this.scales["xAxes"] = this.axes;
 
+		this.options = {};
+		this.options["scales"] = this.scales;
+
+		this.chartData["options"] = this.options;
+
+		console.log('chartData', this.chartData);
 		return this.chartData;
 	}
 
@@ -195,44 +232,293 @@ class PolarArea extends ConfigureChart {
 }
 
 class StackChart extends BarChart {
-	constructor(area, data, label){
+	constructor(area, data, label, stackData){
 		super();
 		this.area = area;
 		this.data = data;
 		this.label = label;
+		this.stackData = stackData;
 	}
 
 	createType() {
-		return 'polarArea';
+		return 'bar';
 	}
 
 	createLabel() {
 		return this.label;
 	}
 
-	createData(){
-		return this.data;
+	createData() {
+		var config = new Configuration();
+		this.datasets = [];
+
+		this.tempLabel = [];
+		for(this.i=0; this.i<this.stackData.length; this.i++) {
+			this.obj = {};
+			this.temDta = [];
+			for(this.k=0; this.k<this.stackData[0].length; this.k++) {
+				this.tempLabel.push(this.stackData[0][this.k][0]);
+				for(this.j=1; this.j<this.stackData[0][this.k].length; this.j++) {
+					this.temDta.push(Number(this.stackData[0][this.k][this.j]));
+				}
+				this.obj["data"] = this.temDta;
+			}
+			this.datasets.push(this.obj);
+		}
+
+		this.newObj = {};
+		this.newObj["data"] = this.data;
+
+		this.datasets.push(this.newObj);
+
+		this.finalData = {}
+		this.finalData["labels"] = this.tempLabel;
+		this.finalData["datasets"] = this.datasets;
+		return this.finalData;
 	}
 
 	createSettings() {
 		this.chartData = {};
 		this.chartData["type"] = this.createType();
 
-		this.dataset = {};
-		this.dataset["data"] = this.createData();
-		this.data = [];
-		this.data.push(this.dataset);
+		this.chartData["data"] = this.createData();
 
-		this.tempData = {};
-		this.tempData["datasets"] = this.data;
+		this.axes = [];
+		this.stacked = {};
+		this.stacked["stacked"] = true;
+		this.axes.push(this.stacked);
 
-		this.chartData["data"] = this.tempData;
+		this.scales = {};
+		this.scales["yAxes"] = this.axes;
 
+		this.options = {};
+		this.options["scales"] = this.scales;
+
+		this.chartData["options"] = this.options;
+
+		console.log('stack chart option', this.chartData);
 		return this.chartData;
 	}
 
 	plotChart(){
 		super.create_settings(this.area, this.createSettings());
+	}
+}
+
+class Configuration {
+	constructor() {
+
+	}
+
+	backGroundColour() {
+		this.bgColour = [
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+			'rgba(148, 0, 211, 1)',
+			'rgba(147, 112, 219, 1)',
+			'rgba(65, 105, 225, 1)',
+			'rgba(198, 226, 255, 1)',
+			'rgba( 0, 250, 154, 1)',
+			'rgba(0, 238, 118, 1)',
+			'rgba(127, 255, 0, 1)',
+			'rgba(173, 255, 47, 1)',
+			'rgba(255, 255, 0, 1)',
+			'rgba(255, 165, 0, 1)',
+			'rgba(255, 69, 0, 1)',
+			'rgba(255, 48, 48, 1)',
+		];
+
+		return this.bgColour;
 	}
 }
 
