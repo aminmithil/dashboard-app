@@ -141,16 +141,16 @@
 			
 			var stringColumns = [];
 			var numericColumns = [];
-
-			var heading = df.listColumns();
-
-			console.log('length', df.toArray()[0][0].length);
-
+			var heading = df.listColumns();			
 			for(var i=0; i<selectedColumns.length; i++){
+				console.log('in loop')
+				console.log(df.toArray()[0][selectedColumns[i]])
 				console.log('is Number', isNumber(df.toArray()[0][selectedColumns[i]]));
-				if(isNumber(df.toArray()[0][selectedColumns[i]]) == false){
+				if(isNumber(df.toArray()[0][selectedColumns[i]]) == false)
+				{
 					stringColumns.push(selectedColumns[i]);
-				} else {
+				} 
+				else {
 					if (df.toArray()[0][selectedColumns[i]].length < 3) 
 						numericColumns.push(selectedColumns[i]);
 					else
@@ -192,6 +192,7 @@
 				var distinctValue = df.distinct(columnName).toArray();
 				console.log('distinct value', distinctValue);
 				for (var j=0; j<distinctValue.length; j++) {
+					
 					if(j%6 == 0)
 						excludeCheckBox += "<tr><td><input name=excludeCheckBox type=checkbox id=" + distinctValue[j] + " class=" + className +"><label for="+distinctValue[j]+">" + distinctValue[j] + "</label></td>";
 					else if((j+1)%6 == 0)
@@ -208,7 +209,6 @@
 			for(var k=0; k<numericColumns.length; k++){
 				var num = Number(numericColumns[k]);
 				var columnName = heading[num];
-
 				var distinctValue = df.distinct(columnName).toArray();
 				for (var j=0; j<distinctValue.length; j++) {
 					var flag = numericConditionValue.includes(distinctValue[j][0]);
@@ -237,6 +237,7 @@
 			var excludeValue = [];
 			for(var i=0; i<excludedData.length; i++) {
 				if(excludedData[i].checked) {
+
 					excludeValue.push(excludedData[i].id);
 				}
 			}
@@ -244,21 +245,28 @@
 			var heading = df.listColumns();
 			var conditionStringColumns = [];
 			for(var i=0; i<stringColumns.length; i++) {
+			
+			
+			
 				var columnName = heading[stringColumns[i]];
 				var dfArray = df.select(columnName).toArray();
 				
 				for(var j=0; j<excludeValue.length; j++) {
-					if(dfArray[j][0] == excludeValue[j]) {
+					if(dfArray[j][0].includes(excludeValue[j])) {
 						conditionStringColumns.push(columnName);
 					}
 				}
+				
+				
+				
+				
 			}
 			console.log('conditionStringColumns', conditionStringColumns);
 			console.log('excludeValue', excludeValue);
 			var dataframe = df;
 			if(conditionStringColumns.length != 0) {
 				for(var i=0; i<conditionStringColumns.length; i++) {
-					dataframe = dataframe.filter(row => row.get(conditionStringColumns[i]) != excludeValue[i]);
+					dataframe = dataframe.filter(row => row.get(conditionStringColumns[i]).includes(excludeValue[i])==false);
 				} 
 			}
 
