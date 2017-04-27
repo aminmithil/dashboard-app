@@ -162,6 +162,7 @@
 		}
 
 		function displayExcludeArea(stringColumns, numericColumns, df) {
+		globlist=[]
 			if(numericColumns.length >= 1) {
 				document.getElementById('stacked').disabled = false;
 				document.getElementById('pivot').disabled = false;
@@ -192,13 +193,14 @@
 				var distinctValue = df.distinct(columnName).toArray();
 				console.log('distinct value', distinctValue);
 				for (var j=0; j<distinctValue.length; j++) {
+					id = j+2000
 					
 					if(j%6 == 0)
-						excludeCheckBox += "<tr><td><input name=excludeCheckBox type=checkbox id=" + distinctValue[j] + " class=" + className +"><label for="+distinctValue[j]+">" + distinctValue[j] + "</label></td>";
+						excludeCheckBox += "<tr><td><input name=excludeCheckBox type=checkbox id=" +id+ " class=" + className +"><label for="+id+ ">" + distinctValue[j] + "</label></td>";
 					else if((j+1)%6 == 0)
-						excludeCheckBox += "<td><input name=excludeCheckBox type=checkbox id=" + distinctValue[j] + " class=" + className +"><label for="+distinctValue[j]+">" + distinctValue[j] + "</label></td></tr>";
+						excludeCheckBox += "<td><input name=excludeCheckBox type=checkbox id=" +id+  " class=" + className +"><label for="+id+ ">" + distinctValue[j] + "</label></td></tr>";
 					else
-						excludeCheckBox += "<td><input name=excludeCheckBox type=checkbox id=" + distinctValue[j] + " class=" + className +"><label for="+distinctValue[j]+">" + distinctValue[j] + "</label></td>";
+						excludeCheckBox += "<td><input name=excludeCheckBox type=checkbox id=" +id+ " class=" + className +"><label for="+id+ ">" + distinctValue[j] + "</label></td>";
 				}
 			} 
 			excludeCheckBox += "</table>";
@@ -209,11 +211,11 @@
 			for(var k=0; k<numericColumns.length; k++){
 				var num = Number(numericColumns[k]);
 				var columnName = heading[num];
-				var distinctValue = df.distinct(columnName).toArray();
-				for (var j=0; j<distinctValue.length; j++) {
-					var flag = numericConditionValue.includes(distinctValue[j][0]);
+				var distinctValue1 = df.distinct(columnName).toArray();
+				for (var j=0; j<distinctValue1.length; j++) {
+					var flag = numericConditionValue.includes(distinctValue1[j][0]);
 					if(flag == false){
-						numericConditionValue.push(distinctValue[j][0]);
+						numericConditionValue.push(distinctValue1[j][0]);
 					}
 				}
 			}
@@ -228,11 +230,11 @@
 			document.getElementById('filterValue').innerHTML = filterCondition;
 
 			document.getElementById('btn_PlotChart').addEventListener("click", function() {
-			    generateChartData(stringColumns, numericColumns, df);
+			    generateChartData(stringColumns, numericColumns, df,distinctValue);
 			});
 		}
 
-		function generateChartData(stringColumns, numericColumns, df) {
+		function generateChartData(stringColumns, numericColumns, df,dv) {
 			var excludedData = document.getElementsByName('excludeCheckBox');
 			var excludeValue = [];
 			for(var i=0; i<excludedData.length; i++) {
@@ -252,7 +254,7 @@
 				var dfArray = df.select(columnName).toArray();
 				
 				for(var j=0; j<excludeValue.length; j++) {
-					if(dfArray[j][0].includes(excludeValue[j])) {
+					if(dfArray[j][0].includes(dv[excludeValue[j]-2000])) {
 						conditionStringColumns.push(columnName);
 					}
 				}
@@ -266,7 +268,7 @@
 			var dataframe = df;
 			if(conditionStringColumns.length != 0) {
 				for(var i=0; i<conditionStringColumns.length; i++) {
-					dataframe = dataframe.filter(row => row.get(conditionStringColumns[i]).includes(excludeValue[i])==false);
+					dataframe = dataframe.filter(row => row.get(conditionStringColumns[i]).includes(dv[excludeValue[i]-2000])==false);
 				} 
 			}
 
